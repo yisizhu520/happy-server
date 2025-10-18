@@ -18,6 +18,9 @@ COPY ./tsconfig.json ./tsconfig.json
 COPY ./vitest.config.ts ./vitest.config.ts
 COPY ./sources ./sources
 
+# Generate Prisma Client in builder stage
+RUN yarn prisma generate
+
 # Build the Next.js application
 RUN yarn build
 
@@ -36,7 +39,11 @@ ENV NODE_ENV=production
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/sources ./sources
+
+# Copy pre-generated Prisma Client to ensure it's synced with the schema
+COPY --from=builder /app/node_modules/.prisma /app/node_modules/.prisma
 
 # Expose the port the app will run on
 EXPOSE 3000

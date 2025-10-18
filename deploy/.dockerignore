@@ -1,0 +1,27 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+*.md
+README*
+QUICKSTART*
+
+# Environment and secrets
+.env
+.env.*
+
+# Data directories
+data/
+
+# Scripts
+*.sh
+*.ps1
+*.mjs
+*.cjs
+
+# Deployment configs (keep in deploy folder only)
+docker-compose.yml
+handy.yaml
+happy-redis.yaml
+
